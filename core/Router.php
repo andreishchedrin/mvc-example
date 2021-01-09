@@ -7,7 +7,7 @@ use app\core\Application;
 
 /**
 * Class Router
-* 
+*
 * @package app\core
 */
 class Router
@@ -15,7 +15,7 @@ class Router
     public Request $request;
     public Response $response;
     protected array $routes = [];
-    
+
     public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
@@ -35,23 +35,22 @@ class Router
     public function resolve()
     {
         $path = $this->request->getPath();
-        $method = $this->request->getMethod();       
-        $callback = $this->routes[$method][$path] ?? false;       
+        $method = $this->request->getMethod();
+        $callback = $this->routes[$method][$path] ?? false;
         if ($callback === false) {
             $this->response->setStatusCode(404);
             return $this->renderContent("Not found");
         }
         if (is_string($callback)) {
-            return $this->renderView($callback);                
+            return $this->renderView($callback);
         }
-        if (is_array($callback)) {            
+        if (is_array($callback)) {
             Application::$app->controller = new $callback[0]();
             $callback[0] = Application::$app->controller;
-            foreach (Application::$app->controller->middlewares as $route => $middleware) 
-            {
-                if ($route === substr($path, 0 , 1)) {
+            foreach (Application::$app->controller->middlewares as $route => $middleware) {
+                if ($route === substr($path, 0, 1)) {
                     new $middleware->execute();
-                }                
+                }
             }
         }
         return call_user_func($callback, $this->request);
@@ -61,13 +60,13 @@ class Router
     {
         $layoutContent = $this->layoutContent();
         $viewContent = $this->viewContent($view, $params);
-        return str_replace('{{content}}', $viewContent, $layoutContent);       
+        return str_replace('{{content}}', $viewContent, $layoutContent);
     }
 
     public function renderContent($content)
     {
-        $layoutContent = $this->layoutContent();     
-        return str_replace('{{content}}', $content, $layoutContent);        
+        $layoutContent = $this->layoutContent();
+        return str_replace('{{content}}', $content, $layoutContent);
     }
 
     protected function layoutContent()
@@ -79,7 +78,7 @@ class Router
     }
 
     protected function viewContent($view, $params = [])
-    { 
+    {
         foreach ($params as $key => $value) {
             $$key = $value;
         }

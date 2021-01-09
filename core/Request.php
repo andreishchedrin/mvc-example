@@ -4,7 +4,7 @@ namespace app\core;
 
 /**
  * Class Request
- * 
+ *
  * @package app\core
  */
 class Request

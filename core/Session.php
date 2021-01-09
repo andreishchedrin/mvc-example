@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 namespace app\core;
 
 /**
  * Class Session
- * 
+ *
  * @package app\core
  */
 
@@ -14,7 +14,7 @@ class Session
     {
         session_start();
     }
-    public function set(string $key,string $message)
+    public function set(string $key, string $message)
     {
         $_SESSION['flash'][$key] = $message;
     }

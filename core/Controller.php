@@ -6,7 +6,7 @@ use app\core\Application;
 
 /**
  * Class Controller
- * 
+ *
  * @package app\core
  */
 

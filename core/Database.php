@@ -6,7 +6,7 @@ use app\core\Application;
 
 /**
  * Class Database
- * 
+ *
  * @package app\core
  */
 
@@ -37,12 +37,12 @@ class Database
             $instance = new $className();
             echo "Applying migration {$item} ..." . PHP_EOL;
             $instance->up();
-            $newMigrations[] = $item;            
+            $newMigrations[] = $item;
         }
 
         if (!empty($newMigrations)) {
             $this->saveMigrations($newMigrations);
-        } 
+        }
         echo "Done." . PHP_EOL;
     }
 
@@ -53,7 +53,7 @@ class Database
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 migration VARCHAR(255),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=INNODB;"        
+            ) ENGINE=INNODB;"
         );
     }
 

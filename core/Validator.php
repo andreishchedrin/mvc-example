@@ -4,7 +4,7 @@ namespace app\core;
 
 /**
  * Class Validator
- * 
+ *
  * @package app\core
  */
 
@@ -48,7 +48,7 @@ class Validator
         return empty($this->errors);
     }
 
-    public function addError($attribute, $rule, $params = []) 
+    public function addError($attribute, $rule, $params = [])
     {
         $message = $this->errorMessages()[$rule] ?? '';
         foreach ($params as $key => $value) {

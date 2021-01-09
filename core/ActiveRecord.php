@@ -4,11 +4,11 @@ namespace app\core;
 
 /**
  * Class ActiveRecord
- * 
+ *
  * @package app\core
  */
 
-abstract class ActiveRecord 
+abstract class ActiveRecord
 {
     public Validator $validator;
 
@@ -38,7 +38,7 @@ abstract class ActiveRecord
     }
 
     public function save()
-    { 
+    {
         foreach ($this->observers as $observer) {
             if (method_exists($observer, 'creating')) {
                 $observer->creating($this);
@@ -64,7 +64,7 @@ abstract class ActiveRecord
     public function delete()
     {
         //
-    }  
+    }
 
     public function validate()
     {
@@ -73,9 +73,8 @@ abstract class ActiveRecord
 
     public function setObservers()
     {
-        foreach ($this->observers() as $observer)
-        {
-            $this->observers[] = new $observer; 
+        foreach ($this->observers() as $observer) {
+            $this->observers[] = new $observer();
         }
     }
-} 
+}
