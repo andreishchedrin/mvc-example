@@ -28,7 +28,7 @@ abstract class ActiveRecord
 
     abstract public function observers(): array;
 
-    public function loadData($data)
+    public function loadData(array $data): void
     {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
@@ -37,7 +37,7 @@ abstract class ActiveRecord
         }
     }
 
-    public function save()
+    public function save(): bool
     {
         foreach ($this->observers as $observer) {
             if (method_exists($observer, 'creating')) {
@@ -56,22 +56,12 @@ abstract class ActiveRecord
         return true;
     }
 
-    public function update()
-    {
-        //
-    }
-
-    public function delete()
-    {
-        //
-    }
-
-    public function validate()
+    public function validate(): bool
     {
         return $this->validator->validate($this, $this->rules());
     }
 
-    public function setObservers()
+    public function setObservers(): void
     {
         foreach ($this->observers() as $observer) {
             $this->observers[] = new $observer();

@@ -7,7 +7,7 @@ use app\core\Middleware;
 /**
  * Class AuthMiddleware;
  * 
- * @package app\controllers\middleware
+ * @package app\controllers\middlewares
  */
 
 class AuthMiddleware extends Middleware

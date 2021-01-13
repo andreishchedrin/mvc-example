@@ -18,7 +18,7 @@ class Validator
 
     public array $errors = [];
 
-    public function validate(ActiveRecord $model, array $rules)
+    public function validate(ActiveRecord $model, array $rules): bool
     {
         foreach ($rules as $attribute => $rules) {
             $value = $model->{$attribute};
@@ -48,7 +48,7 @@ class Validator
         return empty($this->errors);
     }
 
-    public function addError($attribute, $rule, $params = [])
+    public function addError(string $attribute, string $rule, array $params = []): void
     {
         $message = $this->errorMessages()[$rule] ?? '';
         foreach ($params as $key => $value) {
@@ -57,7 +57,7 @@ class Validator
         $this->errors[$attribute][] = $message;
     }
 
-    public function errorMessages()
+    public function errorMessages(): array
     {
         return [
             self::RULE_REQUIRED => 'This field is required',
@@ -68,12 +68,12 @@ class Validator
         ];
     }
 
-    public function hasError($attribute)
+    public function hasError(string $attribute): mixed
     {
         return $this->errors[$attribute] ?? false;
     }
 
-    public function getFirstError($attribute)
+    public function getFirstError(string $attribute): mixed
     {
         return $this->errors[$attribute][0] ?? false;
     }

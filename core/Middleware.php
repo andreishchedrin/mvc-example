@@ -10,5 +10,5 @@ namespace app\core;
 
 abstract class Middleware
 {
-    abstract public function execute();
+    abstract public function execute(): void;
 }

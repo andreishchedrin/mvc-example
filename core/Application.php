@@ -35,7 +35,7 @@ class Application
         $this->session = new Session();
     }
 
-    public function run()
+    public function run(): void
     {
         try {
             echo $this->router->resolve();
@@ -44,12 +44,12 @@ class Application
         }
     }
 
-    public function getController()
+    public function getController(): Controller
     {
         return $this->controller;
     }
 
-    public function setController($controller)
+    public function setController(Controller $controller): void
     {
         $this->controller = $controller;
     }
