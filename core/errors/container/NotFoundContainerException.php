@@ -13,5 +13,8 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class NotFoundContainerException extends InvalidArgumentException implements NotFoundExceptionInterface
 {
-
+    public function __construct(string $id)
+    {
+        parent::__construct("Container {$id} not found.");
+    }
 }

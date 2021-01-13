@@ -8,9 +8,9 @@
             <directory>tests/unit</directory>
         </testsuite>
 
-        <testsuite name="acceptance">
+        <!-- <testsuite name="acceptance">
             <directory suffix=".phpt">tests/acceptance</directory>  
-        </testsuite>
+        </testsuite> -->
     </testsuites>
 
     <coverage processUncoveredFiles="true">
