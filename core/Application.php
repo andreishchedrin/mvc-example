@@ -10,7 +10,7 @@ use app\core\Database;
 
 /**
  * Class Application
- * 
+ *
  * @package app\core
  */
 class Application
@@ -23,7 +23,7 @@ class Application
     public Session $session;
     public static string $ROOT_DIR;
     public static Application $app;
-    
+
     public function __construct(string $rootPath, array $config)
     {
         self::$ROOT_DIR = $rootPath;
@@ -35,7 +35,7 @@ class Application
         $this->session = new Session();
     }
 
-    public function run() 
+    public function run(): void
     {
         try {
             echo $this->router->resolve();
@@ -44,13 +44,13 @@ class Application
         }
     }
 
-    public function getController()
+    public function getController(): Controller
     {
         return $this->controller;
     }
 
-    public function setController($controller)
+    public function setController(Controller $controller): void
     {
-        $this->controller = $controller;    
+        $this->controller = $controller;
     }
 }

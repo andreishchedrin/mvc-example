@@ -6,7 +6,7 @@ use app\core\Application;
 
 /**
  * Class Database
- * 
+ *
  * @package app\core
  */
 
@@ -20,44 +20,44 @@ class Database
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
-    public function applyMigration()
+    public function applyMigration(): void
     {
         $this->createMigrationsTable();
         $appliedMigrations = $this->getAppliedMigrations();
         $newMigrations = [];
 
         $files = scandir(Application::$ROOT_DIR . '/migrations');
-        $files = array_diff($files, array('..', '.'));
+        $files = array_diff((array) $files, array('..', '.'));
 
         $toApply = array_diff($files, $appliedMigrations);
 
         foreach ($toApply as $item) {
             require_once Application::$ROOT_DIR . '/migrations/' . $item;
-            $className = pathinfo($item, PATHINFO_FILENAME);
+            $className = pathinfo((string) $item, PATHINFO_FILENAME);
             $instance = new $className();
             echo "Applying migration {$item} ..." . PHP_EOL;
             $instance->up();
-            $newMigrations[] = $item;            
+            $newMigrations[] = $item;
         }
 
         if (!empty($newMigrations)) {
             $this->saveMigrations($newMigrations);
-        } 
+        }
         echo "Done." . PHP_EOL;
     }
 
-    public function createMigrationsTable()
+    public function createMigrationsTable(): void
     {
         $this->pdo->exec(
             "CREATE TABLE IF NOT EXISTS migrations (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 migration VARCHAR(255),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=INNODB;"        
+            ) ENGINE=INNODB;"
         );
     }
 
-    public function getAppliedMigrations()
+    public function getAppliedMigrations(): mixed
     {
         $stmt = $this->pdo->prepare("SELECT migration FROM migrations");
         $stmt->execute();
@@ -65,14 +65,14 @@ class Database
         return $stmt->fetchAll(\PDO::FETCH_COLUMN);
     }
 
-    public function saveMigrations(array $migrations)
+    public function saveMigrations(array $migrations): void
     {
         $migrations = implode(",", array_map(fn($m) => "('{$m}')", $migrations));
         $stmt = $this->pdo->prepare("INSERT INTO migrations (migration) VALUES {$migrations}");
         $stmt->execute();
     }
 
-    public function save(ActiveRecord $activeRecord)
+    public function save(ActiveRecord $activeRecord): void
     {
         $tableName = $activeRecord->tableName();
         $attributes = $activeRecord->attributes();

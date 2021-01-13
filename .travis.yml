@@ -1,0 +1,12 @@
+language: php
+
+php: 
+  - "7.4"
+
+install:
+  - composer install
+
+script:
+  - ./vendor/bin/phpcs
+  - ./vendor/bin/phpstan analyse
+  - ./vendor/bin/phpunit
