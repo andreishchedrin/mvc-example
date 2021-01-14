@@ -16,24 +16,36 @@ use ReflectionClass;
 
 class Container implements ContainerInterface
 {
-    private array $values;
+    private $providers;
 
-    public function __construct(array $values)
+    public function __construct(ProviderInterface ...$providers)
     {
-        $this->values = $values;
+        $this->providers = $providers;
     }
 
     public function get($id)
     {
-        if (!$this->has($id)) {
+        $provider = $this->findProvider($id);
+        if (null === $provider) {
             throw new NotFoundContainerException($id);
         }
 
-        return $this->values[$id];
+        return $provider->provide($id, $this);
     }
 
     public function has($id)
     {
-        return array_key_exists($id, $this->values);
+        return !is_null($this->findProvider($id));
+    }
+
+    private function findProvider(string $id): ?ProviderInterface
+    {
+        foreach ($this->providers as $provider) {
+            if ($provider->isProvidable($id)) {
+                return $provider;
+            }
+        }
+
+        return null;
     }
 }
