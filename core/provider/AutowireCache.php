@@ -12,7 +12,7 @@ use ReflectionException;
 
 /**
  * Class AutowireCache
- * 
+ *
  * @package app\core\provider
  */
 
@@ -28,11 +28,11 @@ class AutowireCache implements ProviderInterface
     public function provide(string $id, ContainerInterface $container)
     {
         $args = [];
-        
+
         if (!$this->cache->has($id)) {
-            try { 
+            try {
                 $class = new ReflectionClass($id);
-                $this->cache->set($id, AutowireReflection::getDependencies($class));               
+                $this->cache->set($id, AutowireReflection::getDependencies($class));
             } catch (ReflectionException | InvalidArgumentException $e) {
                 throw new NotFoundContainerException($id);
             }

@@ -12,11 +12,11 @@ use ReflectionException;
 
 /**
  * Class AutowirePoolCache
- * 
+ *
  * @package app\core\provider
  */
 
-class AutowirePoolCache implements ProviderInterface 
+class AutowirePoolCache implements ProviderInterface
 {
     private $pool;
 
@@ -39,7 +39,7 @@ class AutowirePoolCache implements ProviderInterface
                 foreach ($item->get() as $dependency) {
                     $args[] = $container->get($dependency);
                 }
-        
+
                 return new $id(...$args);
             }
         } catch (ReflectionException | InvalidArgumentException $e) {
